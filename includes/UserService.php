@@ -15,9 +15,12 @@ class UserService
     /**
      * Constructor
      */
-    public function __construct(PDO $db)
+    public function __construct()
     {
-        $this->conn = $db;
+        require_once "Database.php";
+
+        $db = new Database();
+        $this->conn = $db->getConnection();
     }
 
     /**
@@ -73,11 +76,10 @@ class UserService
      */
     public function find_by_id($id)
     {
-        $query = $this->conn->prepare("SELECT * EXCEPT password FROM Users WHERE id='{$id}'");
+        $query = $this->conn->prepare("SELECT * FROM Users WHERE id='{$id}'");
         $query->execute();
         $result = $query->fetch(PDO::FETCH_ASSOC);
         if($query->rowCount() > 0) {
-//            $this->set_user_info($result);
             return $result;
         }
         return false;
@@ -111,19 +113,18 @@ class UserService
                                                 email=:email, 
                                                 password=:password, 
                                                 created_at=:created_at");
+
         $query->bindParam(":firstname", $firstname);
         $query->bindParam(":lastname", $lastname);
         $query->bindParam(":dob", $dob);
         $query->bindParam(":email", $email);
         $query->bindParam(":password", $password);
         $query->bindParam(":created_at", $created_at);
-        $query->execute();
-        $result = $query->fetch(PDO::FETCH_ASSOC);
-        if($query->rowCount() > 0) {
-//            $this->set_user_info($result);
-            return true;
+
+        if ($query->execute()) {
+            return $this->conn->lastInsertId();
         }
-        return false;
+        return $query->execute();
     }
     public function update_user($user_id)
     {

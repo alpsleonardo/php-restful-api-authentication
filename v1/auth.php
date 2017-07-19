@@ -73,8 +73,7 @@ function refresh_token() {
     $resp = array();
 
     if ($token_value) {
-        $db = new Database();
-        $authService = new AuthService($db->getConnection());
+        $authService = new AuthService();
         $verification = $authService->verify_jwt($token_value, REFRESH_SECRET_KEY);
 
         if ($verification) {
