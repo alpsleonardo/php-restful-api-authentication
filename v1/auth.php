@@ -16,13 +16,9 @@ include_once '../includes/Config.php';
 include_once '../includes/Database.php';
 include_once '../includes/UserService.php';
 include_once '../includes/AuthService.php';
-//require '../vendor/autoload.php';
-//
+
+
 $method = isset($_POST["method"]) ? $_POST["method"] : "";
-
-
-//?$isValid = filter_var($user, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => "/^[a-zA-Z0-9]+$/")));
-
 
 switch ($method) {
     case "login":
@@ -34,6 +30,10 @@ switch ($method) {
         break;
 
     default:
+        $resp = array();
+        $resp['error'] = true;
+        $resp['message'] = "Invalid request";
+        echo json_encode($resp);
         break;
 }
 
@@ -47,15 +47,15 @@ function authenticate_user() {
         $db = new Database();
         $userService = new UserService($db->getConnection());
         $loginSuccess = $userService->login($email, $password);
-        echo "dd";
+
         if ($loginSuccess) {
 
             $authService = new AuthService();
-            echo "dd";
+
             $resp['error'] = false;
             $resp['resp'] = $authService->generate_tokens($loginSuccess);
         } else {
-            echo "dd";
+
             $resp['error'] = true;
             $resp['message'] = "Invalid username or password";
         }
@@ -69,8 +69,31 @@ function authenticate_user() {
 }
 
 function refresh_token() {
-    $token_value = isset($_POST["email"]) ? $_POST["email"] : "";
-    $password = isset($_POST["password"]) ? $_POST["password"] : "";
+    $token_value = isset($_POST["tok_val"]) ? $_POST["tok_val"] : "";
+    $resp = array();
 
+    if ($token_value) {
+        $db = new Database();
+        $authService = new AuthService($db->getConnection());
+        $verification = $authService->verify_jwt($token_value, REFRESH_SECRET_KEY);
 
+        if ($verification) {
+            $decoded = json_decode(json_encode($verification), true);
+            $custom_data = $decoded['data'];
+
+            $resp['error'] = false;
+            $resp['resp'] = $authService->generate_tokens($custom_data);
+
+        } else {
+
+            $resp['error'] = true;
+            $resp['message'] = "Invalid token";
+        }
+    } else {
+
+        $resp['error'] = true;
+        $resp['message'] = "Invalid request";
+    }
+
+    echo json_encode($resp);
 }
