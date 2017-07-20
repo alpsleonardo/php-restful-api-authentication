@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="767332ba-ee11-4ec6-9843-e69dde27bef9" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/DomainService.php" afterPath="$PROJECT_DIR$/includes/DomainService.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/v1/domain.php" afterPath="$PROJECT_DIR$/v1/domain.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -73,8 +72,8 @@
       <file leaf-file-name="domain.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/v1/domain.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="625">
-              <caret line="59" column="5" lean-forward="true" selection-start-line="59" selection-start-column="5" selection-end-line="59" selection-end-column="5" />
+            <state relative-caret-position="-80">
+              <caret line="37" column="30" lean-forward="false" selection-start-line="37" selection-start-column="30" selection-end-line="37" selection-end-column="30" />
               <folding>
                 <element signature="e#6#91#0#PHP" expanded="true" />
               </folding>
@@ -85,8 +84,8 @@
       <file leaf-file-name="DomainService.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/includes/DomainService.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="42" column="9" lean-forward="true" selection-start-line="42" selection-start-column="9" selection-end-line="42" selection-end-column="9" />
+            <state relative-caret-position="1740">
+              <caret line="116" column="26" lean-forward="true" selection-start-line="116" selection-start-column="26" selection-end-line="116" selection-end-column="26" />
               <folding>
                 <element signature="e#6#90#0#PHP" expanded="true" />
                 <marker date="1500518922000" expanded="true" signature="393:430" ph="SELECT * FRO... Domains" />
@@ -288,12 +287,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1500480574908</updated>
-      <workItem from="1500480576078" duration="25141000" />
+      <workItem from="1500480576078" duration="25933000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25141000" />
+    <option name="totallyTimeSpent" value="25933000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-240" y="-1058" width="1301" height="1058" extended-state="0" />
@@ -398,16 +397,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/v1/user.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="685">
-          <caret line="65" column="123" lean-forward="true" selection-start-line="63" selection-start-column="0" selection-end-line="65" selection-end-column="123" />
-          <folding>
-            <element signature="e#6#91#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/includes/UserService.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="534">
@@ -427,8 +416,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/includes/DomainService.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="42" column="9" lean-forward="true" selection-start-line="42" selection-start-column="9" selection-end-line="42" selection-end-column="9" />
+        <state relative-caret-position="1740">
+          <caret line="116" column="26" lean-forward="true" selection-start-line="116" selection-start-column="26" selection-end-line="116" selection-end-column="26" />
           <folding>
             <element signature="e#6#90#0#PHP" expanded="true" />
             <marker date="1500518922000" expanded="true" signature="393:430" ph="SELECT * FRO... Domains" />
@@ -444,10 +433,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/v1/user.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="685">
+          <caret line="65" column="123" lean-forward="true" selection-start-line="63" selection-start-column="0" selection-end-line="65" selection-end-column="123" />
+          <folding>
+            <element signature="e#6#91#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/v1/domain.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="625">
-          <caret line="59" column="5" lean-forward="true" selection-start-line="59" selection-start-column="5" selection-end-line="59" selection-end-column="5" />
+        <state relative-caret-position="-80">
+          <caret line="37" column="30" lean-forward="false" selection-start-line="37" selection-start-column="30" selection-end-line="37" selection-end-column="30" />
           <folding>
             <element signature="e#6#91#0#PHP" expanded="true" />
           </folding>

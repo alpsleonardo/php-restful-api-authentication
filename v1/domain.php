@@ -24,19 +24,23 @@ $validity = validate_token();
 
 switch ($method) {
     case "get_domains":
-        $validity ? get_domain_info($validity['id']) : echo_response(true, "Invalid token");
+        $validity ?
+            get_domain_info($validity['id']) : echo_response(true, "Invalid token");
         break;
 
     case "create_domain":
-        $validity ? create_domain($validity['id']) : echo_response(true, "Invalid token");
+        $validity ?
+            create_domain($validity['id']) : echo_response(true, "Invalid token");
         break;
 
     case "update_domain":
-        $validity ? renew_domain() : echo_response(true, "Invalid token");
+        $validity ?
+            renew_domain() : echo_response(true, "Invalid token");
         break;
 
     case "delete_domain":
-        $validity ? delete_domain() : echo_response(true, "Invalid token");
+        $validity ?
+            delete_domain($validity['id']) : echo_response(true, "Invalid token");
         break;
 
     default:
@@ -48,7 +52,8 @@ function get_domain_info($user_id)
 {
     $dmainService = new DomainService();
     $domain = $dmainService->find_by_user_id($user_id);
-    $domain ? echo_response(false, $domain) : echo_response(true, "Domain not found");
+    $domain ?
+        echo_response(false, $domain) : echo_response(true, "Domain not found");
 }
 
 function create_domain($user_id)
@@ -61,15 +66,35 @@ function create_domain($user_id)
 
     $domainService = new DomainService();
     $new_user = $domainService->create_domain($user_id, $domain_name);
-    $new_user ? echo_response(false, $domainService->find_by_domain_id($new_user)) : echo_response(true, "Failed to create a user");
+    $new_user ?
+        echo_response(false, $domainService->find_by_domain_id($new_user)) : echo_response(true, "Failed to create a user");
 }
 
 function renew_domain()
 {
+    $domain_id = isset($_POST["domain_id"]) ? $_POST["domain_id"] : null;
+    $year = isset($_POST["year"]) ? $_POST["year"] : null;
+    if (!$domain_id || !$year) {
+        echo_response(true, "Missing a parameter");
+        return;
+    }
 
+    $domainService = new DomainService();
+    $domain = $domainService->renew_expiry($year, $domain_id);
+    $domain ?
+        echo_response(false, $domain) : echo_response(true, "Failed to renew the domain");
 }
 
-function delete_domain()
+function delete_domain($user_id)
 {
+    $domain_id = isset($_POST["domain_id"]) ? $_POST["domain_id"] : null;
+    if (!$domain_id) {
+        echo_response(true, "Missing a parameter");
+        return;
+    }
 
+    $domainService = new DomainService();
+    $domain = $domainService->delete($domain_id);
+    $domain ?
+        echo_response(false, $domainService->find_by_user_id($user_id)) : echo_response(true, "Failed to renew the domain");
 }
