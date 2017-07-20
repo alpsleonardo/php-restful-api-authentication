@@ -83,7 +83,7 @@ Returns reissued tokens with new expiry timestamp
 ## 2. Users
 -----------------------------
 
-### 1.1 Get User Info :  
+### 2.1 Get User Info :  
 ### GET /v1/user.php?method=getUserInfo
 
 Returns a user info object (currently including all the columns - but this can be fixed)
@@ -106,7 +106,7 @@ Returns a user info object (currently including all the columns - but this can b
 ```
 
 
-### 1.2 Update Password
+### 2.2 Update Password
 ### POST /v1/user.php?method=updatePassword
 - new_password: (string)
 
@@ -128,7 +128,7 @@ Returns a user info object that is updated (currently, password column is includ
     }
 }
 ```
-### 1.3 Create User
+### 2.3 Create User
 ### POST /v1/user.php?method=createUser
 - firstname: (string)
 - lastname: (string)
@@ -154,7 +154,7 @@ Returns a user info object that is created (currently, password column is includ
     }
 }
 ```
-### 1.4 Delete User
+### 2.4 Delete User
 ### POST /v1/user.php?method=deleteUser
 - email: (string)
 - password: (string)
