@@ -11,7 +11,6 @@ class UserService
 {
     private $conn = null;
 
-
     /**
      * Constructor
      */
@@ -67,6 +66,7 @@ class UserService
         $query = $this->conn->prepare("UPDATE Users SET last_logged=? WHERE id =?");
         $query->bindParam(1, $date, PDO::PARAM_STR);
         $query->bindParam(2, $user_id, PDO::PARAM_INT);
+
         return $query->execute();
     }
 
@@ -80,6 +80,7 @@ class UserService
         $query->bindParam(1, $id, PDO::PARAM_INT);
         $query->execute();
         $result = $query->fetch(PDO::FETCH_ASSOC);
+
         if($query->rowCount() > 0) {
             return $result;
         }
@@ -96,12 +97,7 @@ class UserService
         $query->bindParam(1, $email, PDO::PARAM_STR);
         $query->execute();
 
-        // already exists
-        if($query->rowCount() > 0) {
-            return true;
-        }
-        // doesn't exist
-        return false;
+        return ($query->rowCount() > 0);
     }
 
     /**
@@ -133,22 +129,32 @@ class UserService
         if ($query->execute()) {
             return $this->conn->lastInsertId();
         }
-        return $query->execute();
+        return false;
     }
 
     /**
      * Updates the user table row
      */
-    public function update_user($user_id)
+    public function update_user($password, $user_id)
     {
-        //TODO: user update implementation
+        $query = $this->conn->prepare("UPDATE Users SET password=? WHERE id=?");
+        $query->bindParam(1, $password, PDO::PARAM_STR);
+        $query->bindParam(2, $user_id, PDO::PARAM_INT);
+        $query->execute();
+
+        return ($query->rowCount() > 0);
     }
 
     /**
      * Delete the user table row
      */
-    protected function delete()
+    protected function delete($id)
     {
-        //TODO: user update implementation
+        // delete query
+        $query = $this->conn->prepare("DELETE FROM Users WHERE id=?");
+        $query->bindParam(1, $id, PDO::PARAM_INT);
+        $query->execute();
+
+        return ($query->rowCount() > 0);
     }
 }

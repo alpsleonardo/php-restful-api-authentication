@@ -21,7 +21,7 @@ include_once '../includes/Functions.php';
 
 $method = isset($_POST["method"]) ? $_POST["method"] : null;
 $validity = validate_token();
-
+$domainService = new DomainService();
 switch ($method) {
     case "get_domains":
         $validity ?
@@ -33,7 +33,7 @@ switch ($method) {
             create_domain($validity['id']) : echo_response(true, "Invalid token");
         break;
 
-    case "update_domain":
+    case "renew_domain":
         $validity ?
             renew_domain() : echo_response(true, "Invalid token");
         break;
@@ -50,8 +50,8 @@ switch ($method) {
 
 function get_domain_info($user_id)
 {
-    $dmainService = new DomainService();
-    $domain = $dmainService->find_by_user_id($user_id);
+    $domainService = new DomainService();
+    $domain = $domainService->find_by_user_id($user_id);
     $domain ?
         echo_response(false, $domain) : echo_response(true, "Domain not found");
 }
@@ -82,7 +82,7 @@ function renew_domain()
     $domainService = new DomainService();
     $domain = $domainService->renew_expiry($year, $domain_id);
     $domain ?
-        echo_response(false, $domain) : echo_response(true, "Failed to renew the domain");
+        echo_response(false, $domainService->find_by_domain_id($domain_id)) : echo_response(true, "Failed to renew the domain");
 }
 
 function delete_domain($user_id)

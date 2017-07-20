@@ -10,7 +10,9 @@ class DomainService
 {
     private $conn = null;
 
-
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         require_once "Database.php";
@@ -20,6 +22,9 @@ class DomainService
     }
 
 
+    /**
+     * Find domains by user id
+     */
     public function find_by_user_id($user_id)
     {
         $query = $this->conn->prepare("SELECT * FROM Domains WHERE user_id=?");
@@ -32,6 +37,10 @@ class DomainService
         return false;
     }
 
+
+    /**
+     * Find a domain by domain id
+     */
     public function find_by_domain_id($domain_id)
     {
         $query = $this->conn->prepare("SELECT * FROM Domains WHERE id=?");
@@ -45,6 +54,9 @@ class DomainService
     }
 
 
+    /**
+     * renew the expire at field
+     */
     public function renew_expiry($year, $domain_id)
     {
         $time = 0;
@@ -62,26 +74,28 @@ class DomainService
 
         $query = $this->conn->prepare("UPDATE Domains SET expire_at = expire_at + '{$time}' WHERE id=?");
         $query->bindParam(1, $domain_id, PDO::PARAM_INT);
-        $result = $query->fetch(PDO::FETCH_ASSOC);
         $query->execute();
-        if($query->rowCount() > 0) {
-            echo json_encode($result);
-            return true;
-        }
-        return false;
+
+        return ($query->rowCount() > 0);
     }
 
+
+    /**
+     * Check if domain name already exists
+     */
     public function already_exists($domain_name)
     {
         $query = $this->conn->prepare("SELECT * FROM Domains WHERE domain_name=?");
-        $query->bindParam(1, $domain_id, PDO::PARAM_INT);
+        $query->bindParam(1, $domain_name, PDO::PARAM_INT);
         $query->execute();
-        if($query->rowCount() > 0) {
-            return true;
-        }
 
-        return false;
+        return ($query->rowCount() > 0);
     }
+
+
+    /**
+     * Create a new domain registration
+     */
     public function create_domain($user_id, $domain_name)
     {
         if ($this->already_exists($domain_name)) {
@@ -109,15 +123,16 @@ class DomainService
         return false;
     }
 
-    // delete the product
+
+    /**
+     * Delete a domain
+     */
     public function delete($domain_id){
         // delete query
         $query = $this->conn->prepare("DELETE FROM domains WHERE id=?");
         $query->bindParam(1, $domain_id, PDO::PARAM_INT);
         $query->execute();
-        if($query->rowCount() > 0) {
-            return true;
-        }
-        return false;
+
+        return ($query->rowCount() > 0);
     }
 }

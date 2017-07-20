@@ -19,7 +19,7 @@ include_once '../includes/AuthService.php';
 include_once '../includes/Functions.php';
 
 // check if method param is passed appropriately
-$method = isset($_POST["method"]) ? $_POST["method"] : "";
+$method = isset($_POST["method"]) ? $_POST["method"] : null;
 
 switch ($method) {
     case "login":
@@ -46,7 +46,8 @@ function authenticate_user() {
         $loginSuccess = $userService->login($email, $password);
 
         $authService = new AuthService();
-        $loginSuccess ? echo_response(false, $authService->generate_tokens($loginSuccess)) : echo_response(true, "Invalid email or password");
+        $loginSuccess ?
+            echo_response(false, $authService->generate_tokens($loginSuccess)) : echo_response(true, "Invalid email or password");
 
     } else {
         echo_response(true, "Invalid request");

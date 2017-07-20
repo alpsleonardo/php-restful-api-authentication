@@ -23,7 +23,8 @@ $validity = validate_token();
 
 switch ($method) {
     case "get_user":
-        $validity ? get_user_info($validity['id']) : echo_response(true, "Invalid token");
+        $validity ?
+            get_user_info($validity['id']) : echo_response(true, "Invalid token");
         break;
 
     case "create_user":
@@ -56,19 +57,31 @@ function get_user_info($id)
 {
     $userService = new UserService();
     $user = $userService->find_by_id($id);
-    $user ? echo_response(false, $user) : echo_response(true, "User not found");
+    $user ?
+        echo_response(false, $user) : echo_response(true, "User not found");
 }
 
 function create_user($firstname, $lastname, $dob, $email, $password)
 {
     $userService = new UserService();
     $new_user = $userService->create_user($firstname, $lastname, $dob, $email, $password);
-    $new_user ? echo_response(false, $userService->find_by_id($new_user)) : echo_response(true, "Failed to create a user");
+    $new_user ?
+        echo_response(false, $userService->find_by_id($new_user)) : echo_response(true, "Failed to create a user");
 }
 
 function update_password($id)
 {
+    $new_password = isset($_POST["new_password"]) ? $_POST["new_password"] : null;
 
+    if (!$new_password) {
+        echo_response(true, "Missing a parameter");
+        return;
+    }
+
+    $userService = new UserService();
+    $user = $userService->update_user($new_password, $id);
+    $user ?
+        echo_response(false, $userService->find_by_id($id)) : echo_response(true, "Failed to update the password");
 }
 
 function delete_user($id)
