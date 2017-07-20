@@ -18,34 +18,31 @@ include_once '../includes/UserService.php';
 include_once '../includes/AuthService.php';
 
 
-$method = isset($_POST["method"]) ? $_POST["method"] : "";
+$method = isset($_POST["method"]) ? $_POST["method"] : null;
 
 switch ($method) {
     case "get_domains":
-        get_user_info();
+        get_domain_info();
         break;
 
     case "create_domain":
-        create_user();
+        create_domain();
         break;
 
     case "update_domain":
-        update_user();
+        renew_domain();
         break;
 
     case "delete_domain":
-        delete_user();
+        delete_domain();
         break;
 
     default:
-        $resp = array();
-        $resp['error'] = true;
-        $resp['message'] = "Invalid request";
-        echo json_encode($resp);
+        echo_response(true, "Invalid request");
         break;
 }
 
-function get_domains()
+function get_domain_info()
 {
 
 }
@@ -55,7 +52,7 @@ function create_domain()
 
 }
 
-function update_domain()
+function renew_domain()
 {
 
 }

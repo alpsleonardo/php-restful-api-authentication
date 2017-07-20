@@ -72,11 +72,12 @@ class UserService
 
 
     /**
-     * Finds a user row by the user id and sets
+     * Finds a user row by the user id
      */
     public function find_by_id($id)
     {
-        $query = $this->conn->prepare("SELECT * FROM Users WHERE id='{$id}'");
+        $query = $this->conn->prepare("SELECT * FROM Users WHERE id=?");
+        $query->bindParam(1, $id, PDO::PARAM_INT);
         $query->execute();
         $result = $query->fetch(PDO::FETCH_ASSOC);
         if($query->rowCount() > 0) {
@@ -87,12 +88,14 @@ class UserService
 
 
     /**
-     * Finds a user row by the user id and sets
+     * Checks if user info is already in the database
      */
     public function already_exists($email)
     {
-        $query = $this->conn->prepare("SELECT * FROM Users WHERE email='{$email}'");
+        $query = $this->conn->prepare("SELECT * FROM Users WHERE email=?");
+        $query->bindParam(1, $email, PDO::PARAM_STR);
         $query->execute();
+
         // already exists
         if($query->rowCount() > 0) {
             return true;
@@ -100,12 +103,18 @@ class UserService
         // doesn't exist
         return false;
     }
+
+    /**
+     * Insert a new user row
+     */
     public function create_user($firstname, $lastname, $dob, $email, $password)
     {
+        // check if the credential sent already exist
         if ($this->already_exists($email)) {
             return false;
         }
-        $created_at = date('Y-m-d H:i:s');;
+
+        $created_at = date('Y-m-d H:i:s');
         $query = $this->conn->prepare("INSERT INTO Users SET 
                                                 firstname=:firstname, 
                                                 lastname=:lastname, 
@@ -126,10 +135,18 @@ class UserService
         }
         return $query->execute();
     }
+
+    /**
+     * Updates the user table row
+     */
     public function update_user($user_id)
     {
         //TODO: user update implementation
     }
+
+    /**
+     * Delete the user table row
+     */
     protected function delete()
     {
         //TODO: user update implementation

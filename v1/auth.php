@@ -16,8 +16,9 @@ include_once '../includes/Config.php';
 include_once '../includes/Database.php';
 include_once '../includes/UserService.php';
 include_once '../includes/AuthService.php';
+include_once '../includes/Functions.php';
 
-
+// check if method param is passed appropriately
 $method = isset($_POST["method"]) ? $_POST["method"] : "";
 
 switch ($method) {
@@ -30,48 +31,36 @@ switch ($method) {
         break;
 
     default:
-        $resp = array();
-        $resp['error'] = true;
-        $resp['message'] = "Invalid request";
-        echo json_encode($resp);
+        echo_response(true, "Invalid request");
         break;
 }
 
-
+// authenticate the user credentials via UserService class methods
 function authenticate_user() {
-    $email = isset($_POST["email"]) ? $_POST["email"] : "";
-    $password = isset($_POST["password"]) ? $_POST["password"] : "";
-    $resp = array();
+    // check if the credential params is passed appropriately
+    $email = isset($_POST["email"]) ? $_POST["email"] : null;
+    $password = isset($_POST["password"]) ? $_POST["password"] : null;
 
     if ($email && $password) {
-        $db = new Database();
-        $userService = new UserService($db->getConnection());
+        $userService = new UserService();
         $loginSuccess = $userService->login($email, $password);
 
-        if ($loginSuccess) {
-
-            $authService = new AuthService();
-
-            $resp['error'] = false;
-            $resp['resp'] = $authService->generate_tokens($loginSuccess);
-        } else {
-
-            $resp['error'] = true;
-            $resp['message'] = "Invalid username or password";
-        }
+        $authService = new AuthService();
+        $loginSuccess ? echo_response(false, $authService->generate_tokens($loginSuccess)) : echo_response(true, "Invalid email or password");
 
     } else {
-        $resp['error'] = true;
-        $resp['message'] = "Invalid request";
+        echo_response(true, "Invalid request");
     }
-
-    echo json_encode($resp);
 }
 
+// issue a new token if refress token is valid via AuthService
 function refresh_token() {
+
+    // check if the token param is passed appropriately
     $token_value = isset($_POST["tok_val"]) ? $_POST["tok_val"] : "";
     $resp = array();
 
+    // check if the token param is passed appropriately
     if ($token_value) {
         $authService = new AuthService();
         $verification = $authService->verify_jwt($token_value, REFRESH_SECRET_KEY);
@@ -79,20 +68,12 @@ function refresh_token() {
         if ($verification) {
             $decoded = json_decode(json_encode($verification), true);
             $custom_data = $decoded['data'];
-
-            $resp['error'] = false;
-            $resp['resp'] = $authService->generate_tokens($custom_data);
+            echo_response(false, $authService->generate_tokens($custom_data));
 
         } else {
-
-            $resp['error'] = true;
-            $resp['message'] = "Invalid token";
+            echo_response(true, "Invalid token");
         }
     } else {
-
-        $resp['error'] = true;
-        $resp['message'] = "Invalid request";
+        echo_response(true, "Invalid request");
     }
-
-    echo json_encode($resp);
 }

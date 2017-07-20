@@ -54,16 +54,14 @@ switch ($method) {
 
 function get_user_info($id)
 {
-    $db = new Database();
-    $userService = new UserService($db->getConnection());
+    $userService = new UserService();
     $user = $userService->find_by_id($id);
     $user ? echo_response(false, $user) : echo_response(true, "User not found");
 }
 
 function create_user($firstname, $lastname, $dob, $email, $password)
 {
-    $db = new Database();
-    $userService = new UserService($db->getConnection());
+    $userService = new UserService();
     $new_user = $userService->create_user($firstname, $lastname, $dob, $email, $password);
     $new_user ? echo_response(false, $userService->find_by_id($new_user)) : echo_response(true, "Failed to create a user");
 }
