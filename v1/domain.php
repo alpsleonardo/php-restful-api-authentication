@@ -16,6 +16,7 @@ include_once '../includes/Config.php';
 include_once '../includes/Database.php';
 include_once '../includes/DomainService.php';
 include_once '../includes/AuthService.php';
+include_once '../includes/Functions.php';
 
 
 $method = isset($_POST["method"]) ? $_POST["method"] : null;
@@ -52,7 +53,15 @@ function get_domain_info($user_id)
 
 function create_domain($user_id)
 {
+    $domain_name = isset($_POST["domain_name"]) ? $_POST["domain_name"] : null;
+    if (!$domain_name) {
+        echo_response(true, "Missing a parameter");
+        return;
+    }
 
+    $domainService = new DomainService();
+    $new_user = $domainService->create_domain($user_id, $domain_name);
+    $new_user ? echo_response(false, $domainService->find_by_domain_id($new_user)) : echo_response(true, "Failed to create a user");
 }
 
 function renew_domain()

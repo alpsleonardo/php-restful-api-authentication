@@ -82,11 +82,14 @@ class DomainService
 
         return false;
     }
-    public function create($user_id, $domain_name, $created_at, $expire_at)
+    public function create_domain($user_id, $domain_name)
     {
         if ($this->already_exists($domain_name)) {
             return false;
         }
+
+        $created_at = time();
+        $expire_at = $created_at + (60 * 60 * 24 * 365);
 
         $query = $this->conn->prepare("INSERT INTO domains SET 
                                       user_id=:user_id, 
@@ -97,7 +100,6 @@ class DomainService
         // bind values
         $query->bindParam(":user_id", $user_id);
         $query->bindParam(":domain_name", $domain_name);
-        $query->bindParam(":created_at", $created_at);
         $query->bindParam(":created_at", $created_at);
         $query->bindParam(":expire_at", $expire_at);
         $query->execute();
