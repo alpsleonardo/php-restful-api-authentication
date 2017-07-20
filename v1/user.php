@@ -18,8 +18,13 @@ include_once '../includes/UserService.php';
 include_once '../includes/AuthService.php';
 include_once '../includes/Functions.php';
 
-$method = isset($_POST["method"]) ? $_POST["method"] : "";
-$validity = validate_token();
+$client_id = isset($_SERVER["HTTP_CLIENT_ID"]) ? $_SERVER["HTTP_CLIENT_ID"] : null;
+if (!validate_client_id()) {
+    return;
+}
+
+$method = isset($_POST["method"]) ? $_POST["method"] : null;
+$validity = validate_token(ACCESS_SECRET_KEY);
 
 switch ($method) {
     case "get_user":

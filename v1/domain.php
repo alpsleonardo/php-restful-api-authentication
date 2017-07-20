@@ -18,10 +18,14 @@ include_once '../includes/DomainService.php';
 include_once '../includes/AuthService.php';
 include_once '../includes/Functions.php';
 
+$client_id = isset($_SERVER["HTTP_CLIENT_ID"]) ? $_SERVER["HTTP_CLIENT_ID"] : null;
+if (!validate_client_id()) {
+    return;
+}
 
 $method = isset($_POST["method"]) ? $_POST["method"] : null;
-$validity = validate_token();
-$domainService = new DomainService();
+$validity = validate_token(ACCESS_SECRET_KEY);
+
 switch ($method) {
     case "get_domains":
         $validity ?
