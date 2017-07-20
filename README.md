@@ -10,17 +10,17 @@ Table of contents
   * [Host](#host)
   * [Headers](#headers)
 
-**[Authentication](#authentication)**
+**[Authentication](#1-authentication)**
   * [Login](#login)
   * [Refresh](#refresh)
  
-**[Users](#users)**
+**[Users](#2-users)**
   * [Get User Info](#get-user-info)
   * [Create User](#create-user)
   * [Update Password](#update-password)
   * [Delete User](#delete-user)
 
-**[Domains](#domains)**
+**[Domains](#3-domains)**
   * [Get Domain Info](#get-domain-info)
   * [Create Domain](#create-domain)
   * [Renew Domain](#renew-domain)
@@ -158,13 +158,61 @@ Returns a user info object that is created (currently, password column is includ
 ### POST /v1/user.php?method=deleteUser
 - email: (string)
 - password: (string)
-Returns a user info object that is updated (currently, password column is included for demonstration purpose)
+
+Returns an object that contains a message of successful delete
 
 #### Example JSON response
 ```javascript
 {
-    "error": false
+    "error": false,
+    "resp": "Successfully deleted"
 }
 ```
 
+## 3. Domains
+-----------------------------
 
+### 3.1 Get Domain Info :  
+### GET /v1/domain.php?method=getDomainInfo
+
+Returns an object that contains all the domains by a user id
+
+#### Example JSON response
+```javascript
+
+```
+
+
+### 3.2 Renew Domain
+### POST /v1/domain.php?method=renewDomain
+- domain_id: (int)
+
+Returns an object that contains the domain info with newly updated expiry timestamp
+
+#### Example JSON response
+```javascript
+
+```
+### 2.3 Create Domain
+### POST /v1/domain.php?method=createDomain
+- domain_name: (string)
+
+Returns an object that contains the new domain info
+
+#### Example JSON response
+```javascript
+
+```
+### 3.4 Delete User
+### POST /v1/domain.php?method=deleteUser
+- domain_id: (int)
+
+Returns an object that contains a message of successful delete
+
+#### Example JSON response
+```javascript
+{
+    "error": false,
+    "resp": "Successfully deleted"
+}
+```
