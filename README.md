@@ -43,7 +43,7 @@ authorization: JSON Web Token (issued after the first login - either access toke
 -----------------------------
 
 ### 1.1 Login :  
-#### POST /auth.php?method=login
+### POST /auth.php?method=login
 email: (string)\
 password: (string)
 
@@ -63,7 +63,7 @@ Returns JSON Web Tokens: access token and refresh token
 
 
 ### 1.2 Refresh
-#### POST /auth.php?method=refresh
+### POST /auth.php?method=refresh
 refresh_token: (string)
 
 Returns reissued tokens with new expiry timestamp
