@@ -39,11 +39,11 @@ Authentication Token as well as Client ID must be passed through Header. All met
 client_id: "Your-secret-key" (common to all calls)
 authorization: JSON Web Token (issued after the first login - either access token or refresh token)
 
-### 1. Authentication
+## 1. Authentication
 -----------------------------
 
-## 1.1 Login :  
-###POST /auth.php?method=login
+### 1.1 Login :  
+#### POST /auth.php?method=login
 email: (string)\
 password: (string)
 
@@ -62,8 +62,8 @@ Returns JSON Web Tokens: access token and refresh token
 ```
 
 
-## 1.2 Refresh
-###POST /auth.php?method=refresh
+### 1.2 Refresh
+#### POST /auth.php?method=refresh
 refresh_token: (string)
 
 Returns reissued tokens with new expiry timestamp
