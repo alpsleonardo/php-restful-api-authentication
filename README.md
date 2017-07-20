@@ -31,7 +31,7 @@ Things to know:
 ---------------
 
 ### Host:
-All API requests should be made to: https://{your-domain}/v1/
+All API requests should be made to: https://{your-domain}
 
 ### Headers :
 Authentication Token as well as Client ID must be passed through Header. All methods will require this process except the login method.\
@@ -43,9 +43,9 @@ authorization: JSON Web Token (issued after the first login - either access toke
 -----------------------------
 
 ### 1.1 Login :  
-### POST /auth.php?method=login
-email: (string)\
-password: (string)
+### POST /v1/auth.php?method=login
+- email: (string)\
+- password: (string)
 
 Returns JSON Web Tokens: access token and refresh token
 
@@ -63,8 +63,8 @@ Returns JSON Web Tokens: access token and refresh token
 
 
 ### 1.2 Refresh
-### POST /auth.php?method=refresh
-refresh_token: (string)
+### POST /v1/auth.php?method=refresh
+- refresh_token: (string)
 
 Returns reissued tokens with new expiry timestamp
 
@@ -80,5 +80,91 @@ Returns reissued tokens with new expiry timestamp
 }
 ```
 
+## 2. Users
+-----------------------------
+
+### 1.1 Get User Info :  
+### GET /v1/user.php?method=getUserInfo
+
+Returns a user info object (currently including all the columns - but this can be fixed)
+
+#### Example JSON response
+```javascript
+{
+    "error": false,
+    "resp": {
+        "id": "1",
+        "firstname": "Min",
+        "lastname": "Kim",
+        "dob": "1992-02-21 00:00:00",
+        "email": "minkim.job@gmail.com",
+        "password": "minkimpassword",
+        "created_at": "2017-07-15 20:05:00",
+        "last_logged": "2017-07-20 13:12:45"
+    }
+}
+```
+
+
+### 1.2 Update Password
+### POST /v1/user.php?method=updatePassword
+- new_password: (string)
+
+Returns a user info object that is updated (currently, password column is included for demonstration purpose)
+
+#### Example JSON response
+```javascript
+{
+    "error": false,
+    "resp": {
+        "id": "1",
+        "firstname": "Min",
+        "lastname": "Kim",
+        "dob": "1992-02-21 00:00:00",
+        "email": "minkim.job@gmail.com",
+        "password": "minkim1234",
+        "created_at": "2017-07-15 20:05:00",
+        "last_logged": "2017-07-20 13:12:45"
+    }
+}
+```
+### 1.3 Create User
+### POST /v1/user.php?method=createUser
+- firstname: (string)
+- lastname: (string)
+- dob: (string)
+- email: (string)
+- password: (string)
+
+Returns a user info object that is created (currently, password column is included for demonstration purpose)
+
+#### Example JSON response
+```javascript
+{
+    "error": false,
+    "resp": {
+        "id": "18",
+        "firstname": "Michael",
+        "lastname": "Jackson",
+        "dob": "1958-08-29 00:00:00",
+        "email": "michael.jackson@dead.com",
+        "password": "michaeljacksonstillalive",
+        "created_at": "2017-07-20 13:18:04",
+        "last_logged": "0000-00-00 00:00:00"
+    }
+}
+```
+### 1.4 Delete User
+### POST /v1/user.php?method=deleteUser
+- email: (string)
+- password: (string)
+Returns a user info object that is updated (currently, password column is included for demonstration purpose)
+
+#### Example JSON response
+```javascript
+{
+    "error": false
+}
+```
 
 

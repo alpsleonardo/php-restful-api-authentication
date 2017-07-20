@@ -23,9 +23,7 @@ if (!validate_client_id()) {
     return;
 }
 
-// check if method param is passed appropriately
-$method = isset($_POST["method"]) ? $_POST["method"] : null;
-
+$method = convertUrlQuery(getCurrentURL())["method"];
 switch ($method) {
     case "login":
         authenticate_user();

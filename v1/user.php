@@ -9,7 +9,7 @@
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: access");
-header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Methods: POST, GET");
 header("Access-Control-Allow-Credentials: true");
 
 include_once '../includes/Config.php';
@@ -23,16 +23,16 @@ if (!validate_client_id()) {
     return;
 }
 
-$method = isset($_POST["method"]) ? $_POST["method"] : null;
+$method = convertUrlQuery(getCurrentURL())["method"];
 $validity = validate_token(ACCESS_SECRET_KEY);
 
 switch ($method) {
-    case "get_user":
+    case "getUserInfo":
         $validity ?
             get_user_info($validity['id']) : echo_response(true, "Invalid token");
         break;
 
-    case "create_user":
+    case "createUser":
         $firstname = isset($_POST["firstname"]) ? $_POST["firstname"] : null;
         $lastname = isset($_POST["lastname"]) ? $_POST["lastname"] : null;
         $dob = isset($_POST["dob"]) ? $_POST["dob"] : null;
@@ -43,12 +43,12 @@ switch ($method) {
             create_user($firstname, $lastname, $dob, $email, $password) : echo_response(true, "Invalid parameters");
         break;
 
-    case "update_password":
+    case "updatePassword":
         $validity ?
             update_password($validity['id']) : echo_response(true, "Invalid token");
         break;
 
-    case "delete_user":
+    case "deleteUser":
         $validity ?
             delete_user($validity['id']) : echo_response(true, "Invalid token");
         break;

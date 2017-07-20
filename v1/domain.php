@@ -23,7 +23,7 @@ if (!validate_client_id()) {
     return;
 }
 
-$method = isset($_POST["method"]) ? $_POST["method"] : null;
+$method = convertUrlQuery(getCurrentURL())["method"];
 $validity = validate_token(ACCESS_SECRET_KEY);
 
 switch ($method) {
