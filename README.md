@@ -11,20 +11,20 @@ Table of contents
   * [Headers](#headers)
 
 **[Authentication](#1-authentication)**
-  * [Login](#login)
-  * [Refresh](#refresh)
+  * [Login](#11-login)
+  * [Refresh](#12-refresh)
  
 **[Users](#2-users)**
-  * [Get User Info](#get-user-info)
-  * [Create User](#create-user)
-  * [Update Password](#update-password)
-  * [Delete User](#delete-user)
+  * [Get User Info](#21-get-user-info)
+  * [Create User](#22-create-user)
+  * [Update Password](#23-update-password)
+  * [Delete User](#24-delete-user)
 
 **[Domains](#3-domains)**
-  * [Get Domain Info](#get-domain-info)
-  * [Create Domain](#create-domain)
-  * [Renew Domain](#renew-domain)
-  * [Delete Domain](#delete-domain)
+  * [Get Domain Info](#31-get-domain-info)
+  * [Create Domain](#32-create-domain)
+  * [Renew Domain](#33-renew-domain)
+  * [Delete Domain](#34-delete-domain)
 
 
 Things to know:
@@ -33,7 +33,7 @@ Things to know:
 ### Host:
 All API requests should be made to: https://{your-domain}
 
-### Headers :
+### Headers:
 Authentication Token as well as Client ID must be passed through Header. All methods will require this process except the login method.\
 
 client_id: "Your-secret-key" (common to all calls)
@@ -42,7 +42,7 @@ authorization: JSON Web Token (issued after the first login - either access toke
 ## 1. Authentication
 -----------------------------
 
-### 1.1 Login :  
+### 1.1 Login:  
 ### POST /v1/auth.php?method=login
 - email: (string)\
 - password: (string)
@@ -62,7 +62,7 @@ Returns JSON Web Tokens: access token and refresh token
 ```
 
 
-### 1.2 Refresh
+### 1.2 Refresh:
 ### POST /v1/auth.php?method=refresh
 - refresh_token: (string)
 
@@ -83,7 +83,7 @@ Returns reissued tokens with new expiry timestamp
 ## 2. Users
 -----------------------------
 
-### 2.1 Get User Info :  
+### 2.1 Get User Info:  
 ### GET /v1/user.php?method=getUserInfo
 
 Returns a user info object (currently including all the columns - but this can be fixed)
@@ -106,7 +106,7 @@ Returns a user info object (currently including all the columns - but this can b
 ```
 
 
-### 2.2 Update Password
+### 2.2 Update Password:
 ### POST /v1/user.php?method=updatePassword
 - new_password: (string)
 
@@ -128,7 +128,7 @@ Returns a user info object that is updated (currently, password column is includ
     }
 }
 ```
-### 2.3 Create User
+### 2.3 Create User:
 ### POST /v1/user.php?method=createUser
 - firstname: (string)
 - lastname: (string)
@@ -154,7 +154,7 @@ Returns a user info object that is created (currently, password column is includ
     }
 }
 ```
-### 2.4 Delete User
+### 2.4 Delete User:
 ### POST /v1/user.php?method=deleteUser
 - email: (string)
 - password: (string)
@@ -172,7 +172,7 @@ Returns an object that contains a message of successful delete
 ## 3. Domains
 -----------------------------
 
-### 3.1 Get Domain Info :  
+### 3.1 Get Domain Info:  
 ### GET /v1/domain.php?method=getDomainInfo
 
 Returns an object that contains all the domains by a user id
@@ -183,7 +183,7 @@ Returns an object that contains all the domains by a user id
 ```
 
 
-### 3.2 Renew Domain
+### 3.2 Renew Domain:
 ### POST /v1/domain.php?method=renewDomain
 - domain_id: (int)
 
@@ -193,7 +193,7 @@ Returns an object that contains the domain info with newly updated expiry timest
 ```javascript
 
 ```
-### 2.3 Create Domain
+### 2.3 Create Domain:
 ### POST /v1/domain.php?method=createDomain
 - domain_name: (string)
 
@@ -203,7 +203,7 @@ Returns an object that contains the new domain info
 ```javascript
 
 ```
-### 3.4 Delete User
+### 3.4 Delete User:
 ### POST /v1/domain.php?method=deleteUser
 - domain_id: (int)
 
