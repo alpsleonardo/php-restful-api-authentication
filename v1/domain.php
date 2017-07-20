@@ -14,27 +14,28 @@ header("Access-Control-Allow-Credentials: true");
 
 include_once '../includes/Config.php';
 include_once '../includes/Database.php';
-include_once '../includes/UserService.php';
+include_once '../includes/DomainService.php';
 include_once '../includes/AuthService.php';
 
 
 $method = isset($_POST["method"]) ? $_POST["method"] : null;
+$validity = validate_token();
 
 switch ($method) {
     case "get_domains":
-        get_domain_info();
+        $validity ? get_domain_info($validity['id']) : echo_response(true, "Invalid token");
         break;
 
     case "create_domain":
-        create_domain();
+        $validity ? create_domain($validity['id']) : echo_response(true, "Invalid token");
         break;
 
     case "update_domain":
-        renew_domain();
+        $validity ? renew_domain() : echo_response(true, "Invalid token");
         break;
 
     case "delete_domain":
-        delete_domain();
+        $validity ? delete_domain() : echo_response(true, "Invalid token");
         break;
 
     default:
@@ -42,12 +43,14 @@ switch ($method) {
         break;
 }
 
-function get_domain_info()
+function get_domain_info($user_id)
 {
-
+    $dmainService = new DomainService();
+    $domain = $dmainService->find_by_user_id($user_id);
+    $domain ? echo_response(false, $domain) : echo_response(true, "Domain not found");
 }
 
-function create_domain()
+function create_domain($user_id)
 {
 
 }
