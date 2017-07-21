@@ -1,10 +1,11 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: m1nk1m
- * Date: 2017-07-19
- * Time: 12:12 PM
+ *
+ * @author     Minseok Kim (m1nk1m)
+ * @copyright  Copyright (c) 2017 Minseok Kim. All rights reserved.
+ *
  */
+
 
 class Database
 {

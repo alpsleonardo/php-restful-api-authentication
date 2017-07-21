@@ -1,10 +1,11 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: m1nk1m
- * Date: 2017-07-19
- * Time: 8:52 PM
+ *
+ * @author     Minseok Kim (m1nk1m)
+ * @copyright  Copyright (c) 2017 Minseok Kim. All rights reserved.
+ *
  */
+
 
 class DomainService
 {
@@ -23,7 +24,11 @@ class DomainService
 
 
     /**
-     * Find domains by user id
+     * Finds all the domain rows associated by the user id
+     *
+     * @param integer       $user_id        User's id to be used to select the row
+     *
+     * @return mixed
      */
     public function find_by_user_id($user_id)
     {
@@ -39,7 +44,11 @@ class DomainService
 
 
     /**
-     * Find a domain by domain id
+     * Finds a domain row associated by the domain id
+     *
+     * @param integer       $domain_id      User's id to be used to select the row
+     *
+     * @return mixed
      */
     public function find_by_domain_id($domain_id)
     {
@@ -55,7 +64,12 @@ class DomainService
 
 
     /**
-     * renew the expire at field
+     * Updates timestamp in the expire_at column associated with the domain id
+     *
+     * @param integer       $year           Number of year to be updated
+     * @param integer       $domain_id      Domain id to select the row
+     *
+     * @return bool
      */
     public function renew_expiry($year, $domain_id)
     {
@@ -81,7 +95,11 @@ class DomainService
 
 
     /**
-     * Check if domain name already exists
+     * Checks if the requested domain name is already in the database
+     *
+     * @param string        $domain_name    Domain name to be validated against database (if it exists)
+     *
+     * @return bool
      */
     public function already_exists($domain_name)
     {
@@ -94,7 +112,12 @@ class DomainService
 
 
     /**
-     * Create a new domain registration
+     * Inserts a new table row in the user table
+     *
+     * @param integer       $user_id        User's id to associate the new domain with
+     * @param string        $domain_name    Domain name for new registration
+     *
+     * @return mixed
      */
     public function create_domain($user_id, $domain_name)
     {
@@ -125,7 +148,11 @@ class DomainService
 
 
     /**
-     * Delete a domain
+     * Delete the user table row by user id
+     *
+     * @param integer       $domain_id      Domain id to select the table row
+     *
+     * @return bool
      */
     public function delete($domain_id){
         // delete query
