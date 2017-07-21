@@ -105,7 +105,7 @@ class DomainService
         $created_at = time();
         $expire_at = $created_at + (60 * 60 * 24 * 365);
 
-        $query = $this->conn->prepare("INSERT INTO domains SET 
+        $query = $this->conn->prepare("INSERT INTO Domains SET 
                                       user_id=:user_id, 
                                       domain_name=:domain_name, 
                                       created_at=:created_at, 
@@ -129,7 +129,7 @@ class DomainService
      */
     public function delete($domain_id){
         // delete query
-        $query = $this->conn->prepare("DELETE FROM domains WHERE id=?");
+        $query = $this->conn->prepare("DELETE FROM Domains WHERE id=?");
         $query->bindParam(1, $domain_id, PDO::PARAM_INT);
         $query->execute();
 

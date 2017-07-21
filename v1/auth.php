@@ -18,7 +18,8 @@ include_once '../includes/UserService.php';
 include_once '../includes/AuthService.php';
 include_once '../includes/Functions.php';
 
-$client_id = isset($_SERVER["HTTP_CLIENT_ID"]) ? $_SERVER["HTTP_CLIENT_ID"] : null;
+
+//$client_id = isset($_SERVER["HTTP_CLIENT_ID"]) ? $_SERVER["HTTP_CLIENT_ID"] : null;
 if (!validate_client_id()) {
     return;
 }
@@ -64,8 +65,9 @@ function refresh_token() {
 
     if (!$custom_data) {
         echo_response(true, "Invalid token or request");
+        return;
     }
 
     $authService = new AuthService();
-    echo_response(true, ($authService->generate_tokens(json_decode($custom_data), true)));
+    echo_response(true, ($authService->generate_tokens($custom_data, true)));
 }

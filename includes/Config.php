@@ -9,7 +9,6 @@
 ini_set('display_errors', 1);
 date_default_timezone_set('America/Toronto');
 error_reporting(E_ALL);
-//$home_url="http:localhost:8888/php-cira-test-api";
 
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'cira-test');

@@ -16,14 +16,14 @@ Table of contents
  
 **[Users](#2-users)**
   * [Get User Info](#21-get-user-info)
-  * [Create User](#22-create-user)
-  * [Update Password](#23-update-password)
+  * [Create User](#22-update-password)
+  * [Update Password](#23-create-user)
   * [Delete User](#24-delete-user)
 
 **[Domains](#3-domains)**
   * [Get Domain Info](#31-get-domain-info)
-  * [Create Domain](#32-create-domain)
-  * [Renew Domain](#33-renew-domain)
+  * [Create Domain](#32-renew-domain)
+  * [Renew Domain](#33-create-domain)
   * [Delete Domain](#34-delete-domain)
 
 
@@ -36,7 +36,7 @@ All API requests should be made to: https://{your-domain}
 ### Headers:
 Authentication Token as well as Client ID must be passed through Header. All methods will require this process except the login method.\
 
-client_id: "Your-secret-key" (common to all calls)
+client_id: "Your-Secret-Key" (common to all calls)
 authorization: JSON Web Token (issued after the first login - either access token or refresh token)
 
 ## 1. Authentication
@@ -44,7 +44,7 @@ authorization: JSON Web Token (issued after the first login - either access toke
 
 ### 1.1 Login:  
 ### POST /v1/auth.php?method=login
-- email: (string)\
+- email: (string)
 - password: (string)
 
 Returns JSON Web Tokens: access token and refresh token
@@ -128,6 +128,7 @@ Returns a user info object that is updated (currently, password column is includ
     }
 }
 ```
+
 ### 2.3 Create User:
 ### POST /v1/user.php?method=createUser
 - firstname: (string)
@@ -179,9 +180,61 @@ Returns an object that contains all the domains by a user id
 
 #### Example JSON response
 ```javascript
-
+{
+    "error": false,
+    "resp": [
+        {
+            "id": "1",
+            "user_id": "1",
+            "domain_name": "unreal.ca",
+            "created_at": "1500239400",
+            "expire_at": "2036351400"
+        },
+        {
+            "id": "2",
+            "user_id": "1",
+            "domain_name": "notreal.ca",
+            "created_at": "1500239460",
+            "expire_at": "1531775460"
+        },
+        {
+            "id": "8",
+            "user_id": "1",
+            "domain_name": "mytriage.ca",
+            "created_at": "1500348660",
+            "expire_at": "1531884660"
+        },
+        {
+            "id": "9",
+            "user_id": "1",
+            "domain_name": "newehealth.ca",
+            "created_at": "1500349114",
+            "expire_at": "1531885114"
+        },
+        {
+            "id": "10",
+            "user_id": "1",
+            "domain_name": "richdomain.ca",
+            "created_at": "1500349118",
+            "expire_at": "1531885118"
+        },
+        {
+            "id": "11",
+            "user_id": "1",
+            "domain_name": "australiatravel.ca",
+            "created_at": "1500352353",
+            "expire_at": "1531888353"
+        },
+        {
+            "id": "12",
+            "user_id": "1",
+            "domain_name": "putyourshoes.ca",
+            "created_at": "1500352525",
+            "expire_at": "1531888525"
+        }
+    ]
+}
 ```
-
 
 ### 3.2 Renew Domain:
 ### POST /v1/domain.php?method=renewDomain
@@ -191,7 +244,16 @@ Returns an object that contains the domain info with newly updated expiry timest
 
 #### Example JSON response
 ```javascript
-
+{
+    "error": false,
+    "resp": {
+        "id": "13",
+        "user_id": "1",
+        "domain_name": "algonquinexample.ca",
+        "created_at": "1500646431",
+        "expire_at": "1563718431"
+    }
+}
 ```
 ### 2.3 Create Domain:
 ### POST /v1/domain.php?method=createDomain
@@ -201,9 +263,18 @@ Returns an object that contains the new domain info
 
 #### Example JSON response
 ```javascript
-
+{
+    "error": false,
+    "resp": {
+        "id": "13",
+        "user_id": "1",
+        "domain_name": "algonquinexample.ca",
+        "created_at": "1500646431",
+        "expire_at": "1532182431"
+    }
+}
 ```
-### 3.4 Delete User:
+### 3.4 Delete Domain:
 ### POST /v1/domain.php?method=deleteUser
 - domain_id: (int)
 

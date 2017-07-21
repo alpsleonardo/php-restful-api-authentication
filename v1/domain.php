@@ -27,22 +27,22 @@ $method = convertUrlQuery(getCurrentURL())["method"];
 $validity = validate_token(ACCESS_SECRET_KEY);
 
 switch ($method) {
-    case "get_domains":
+    case "getDomainInfo":
         $validity ?
             get_domain_info($validity['id']) : echo_response(true, "Invalid token");
         break;
 
-    case "create_domain":
+    case "createDomain":
         $validity ?
             create_domain($validity['id']) : echo_response(true, "Invalid token");
         break;
 
-    case "renew_domain":
+    case "renewDomain":
         $validity ?
             renew_domain() : echo_response(true, "Invalid token");
         break;
 
-    case "delete_domain":
+    case "deleteDomain":
         $validity ?
             delete_domain($validity['id']) : echo_response(true, "Invalid token");
         break;
