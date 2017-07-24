@@ -79,7 +79,7 @@ function echo_response($error_status, $output)
  *
  * @return string
  */
-function getCurrentURL() {
+function get_current_url() {
     $protocol = "http";
     if($_SERVER["SERVER_PORT"]==443 || (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]=="on")) {
         $protocol .= "s";
@@ -103,11 +103,11 @@ function getCurrentURL() {
  *
  * @return array
  */
-function convertUrlQuery($query) {
-    $queryParts = explode('&', $query);
+function convert_url_query($query) {
+    $query_parts = explode('&', $query);
 
     $params = array();
-    foreach ($queryParts as $param) {
+    foreach ($query_parts as $param) {
         $item = explode('=', $param);
         $params[$item[0]] = $item[1];
     }

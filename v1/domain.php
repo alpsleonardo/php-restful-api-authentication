@@ -24,7 +24,7 @@ if (!validate_client_id()) {
 }
 
 // get the method type from the query passed
-$method = convertUrlQuery(getCurrentURL())["method"];
+$method = convert_url_query(get_current_url())["method"];
 
 // get the token and validate it
 $validity = validate_token(ACCESS_SECRET_KEY);

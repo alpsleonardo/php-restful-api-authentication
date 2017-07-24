@@ -64,12 +64,12 @@ class AuthService
      */
     private function create_jwt($algorithm, $secret_key, $custom_data, $issue_time, $not_before, $expire)
     {
-        $tokenId = base64_encode(random_bytes(32));
-        $serverName = 'http://localhost/php-cira-test-api/';
+        $token_id = base64_encode(random_bytes(32));
+        $server_name = 'http://localhost/php-cira-test-api/';
         $data = [
             'iat'  => $issue_time,
-            'jti'  => $tokenId,
-            'iss'  => $serverName,
+            'jti'  => $token_id,
+            'iss'  => $server_name,
             'nbf'  => $not_before,
             'exp'  => $expire,
             'data' => $custom_data
