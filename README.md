@@ -34,10 +34,10 @@ Things to know:
 All API requests should be made to: https://{your-domain}
 
 ### Headers:
-Authentication Token as well as Client ID must be passed through Header. All methods will require this process except the login method.\
+Authentication Token as well as Client ID must be passed through Header. All methods will require this process except the login method.
 
 client_id: "Your-Secret-Key" (common to all calls)
-authorization: JSON Web Token (issued after the first login - either access token or refresh token)
+authorization: JSON-Web-Token (issued after the first login - either access token or refresh token)
 
 ## 1. Authentication
 -----------------------------
