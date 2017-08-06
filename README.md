@@ -1,7 +1,7 @@
 RESTful API With JSON Web Token
 =================
 
-This API was developed as an example of RESTful API with authentication layer using JSON Web Token
+This API was developed in OOP PHP as an example of RESTful API with authentication layer using JSON Web Token
 
 Table of contents
 =================
