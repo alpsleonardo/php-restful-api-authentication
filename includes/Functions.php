@@ -114,3 +114,15 @@ function convert_url_query($query) {
 
     return $params;
 }
+
+
+/**
+ * Returns the url query as associative array
+ *
+ * @param string        $request_type   The request type that is inquired for the method
+ *
+ * @return bool
+ */
+function check_http_request($request_type) {
+    return $_SERVER['REQUEST_METHOD'] === $request_type;
+}

@@ -70,7 +70,7 @@ function authenticate_user() {
 
 
 /**
- * Issue a new token if refress token is valid via AuthService
+ * Issue a new token if refresh token is valid via AuthService
  *
  * @return void
  */

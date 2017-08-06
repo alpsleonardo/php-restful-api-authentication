@@ -9,7 +9,7 @@
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: access");
-header("Access-Control-Allow-Methods: POST, GET");
+header("Access-Control-Allow-Methods: POST, GET, PUT, DELETE");
 header("Access-Control-Allow-Credentials: true");
 
 include_once '../includes/Config.php';
@@ -32,26 +32,57 @@ $validity = validate_token(ACCESS_SECRET_KEY);
 // select the API method to execute functions accordingly
 switch ($method) {
     case "getUserInfo":
-        $validity ? get_user_info($validity['id']) : echo_response(true, "Invalid token");
+
+        // require HTTP GET request
+        if (check_http_request("GET")) {
+            $validity ? get_user_info($validity['id']) : echo_response(true, "Invalid token");
+        } else {
+            echo_response(true, "Invalid request");
+        }
+
         break;
 
     case "createUser":
-        $firstname = isset($_POST["firstname"]) ? $_POST["firstname"] : null;
-        $lastname = isset($_POST["lastname"]) ? $_POST["lastname"] : null;
-        $dob = isset($_POST["dob"]) ? $_POST["dob"] : null;
-        $email = isset($_POST["email"]) ? $_POST["email"] : null;
-        $password = isset($_POST["password"]) ? $_POST["password"] : null;
 
-        ($firstname && $lastname && $dob && $email && $password)
-            ? create_user($firstname, $lastname, $dob, $email, $password) : echo_response(true, "Invalid parameters");
+        // require HTTP POST request
+        if (check_http_request("POST")) {
+
+            // check required parameters
+            $firstname = isset($_POST["firstname"]) ? $_POST["firstname"] : null;
+            $lastname = isset($_POST["lastname"]) ? $_POST["lastname"] : null;
+            $dob = isset($_POST["dob"]) ? $_POST["dob"] : null;
+            $email = isset($_POST["email"]) ? $_POST["email"] : null;
+            $password = isset($_POST["password"]) ? $_POST["password"] : null;
+
+            ($firstname && $lastname && $dob && $email && $password)
+                ? create_user($firstname, $lastname, $dob, $email, $password) : echo_response(true, "Invalid parameters");
+
+        } else {
+            echo_response(true, "Invalid request");
+        }
+
         break;
 
     case "updatePassword":
-        $validity ? update_password($validity['id']) : echo_response(true, "Invalid token");
+
+        // require HTTP PUT request
+        if (check_http_request("PUT")) {
+            $validity ? update_password($validity['id']) : echo_response(true, "Invalid token");
+        } else {
+            echo_response(true, "Invalid request");
+        }
+
         break;
 
     case "deleteUser":
-        $validity ? delete_user($validity['id']) : echo_response(true, "Invalid token");
+
+        // require HTTP DELETE request
+        if (check_http_request("DELETE")) {
+            $validity ? delete_user($validity['id']) : echo_response(true, "Invalid token");
+        } else {
+            echo_response(true, "Invalid request");
+        }
+
         break;
 
     default:

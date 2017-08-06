@@ -9,7 +9,7 @@
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: access");
-header("Access-Control-Allow-Methods: POST, GET");
+header("Access-Control-Allow-Methods: POST, GET, PUT, DELETE");
 header("Access-Control-Allow-Credentials: true");
 
 include_once '../includes/Config.php';
@@ -32,19 +32,47 @@ $validity = validate_token(ACCESS_SECRET_KEY);
 // select the API method to execute functions accordingly
 switch ($method) {
     case "getDomainInfo":
-        $validity ? get_domain_info($validity['id']) : echo_response(true, "Invalid token");
+
+        // require HTTP GET request
+        if (check_http_request("GET")) {
+            $validity ? get_domain_info($validity['id']) : echo_response(true, "Invalid token");
+        } else {
+            echo_response(true, "Invalid request");
+        }
+
         break;
 
     case "createDomain":
-        $validity ? create_domain($validity['id']) : echo_response(true, "Invalid token");
+
+        // require HTTP POST request
+        if (check_http_request("POST")) {
+            $validity ? create_domain($validity['id']) : echo_response(true, "Invalid token");
+        } else {
+            echo_response(true, "Invalid request");
+        }
+
         break;
 
     case "renewDomain":
-        $validity ? renew_domain() : echo_response(true, "Invalid token");
+
+        // require HTTP PUT request
+        if (check_http_request("PUT")) {
+            $validity ? renew_domain() : echo_response(true, "Invalid token");
+        } else {
+            echo_response(true, "Invalid request");
+        }
+
         break;
 
     case "deleteDomain":
-        $validity ? delete_domain($validity['id']) : echo_response(true, "Invalid token");
+
+        // require HTTP DELETE request
+        if (check_http_request("DELETE")) {
+            $validity ? delete_domain($validity['id']) : echo_response(true, "Invalid token");
+        } else {
+            echo_response(true, "Invalid request");
+        }
+
         break;
 
     default:

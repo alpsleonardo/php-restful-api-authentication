@@ -1,7 +1,7 @@
-CIRA TEST API
+RESTful API With JSON Web Token
 =================
 
-This API is developed for the interview test at CIRA
+This API was developed as an example of RESTful API with authentication layer using JSON Web Token
 
 Table of contents
 =================
@@ -107,7 +107,7 @@ Returns a user info object (currently including all the columns - but this can b
 
 
 ### 2.2 Update Password:
-### POST /v1/user.php?method=updatePassword
+### PUT /v1/user.php?method=updatePassword
 - new_password: (string)
 
 Returns a user info object that is updated (currently, password column is included for demonstration purpose)
@@ -156,7 +156,7 @@ Returns a user info object that is created (currently, password column is includ
 }
 ```
 ### 2.4 Delete User:
-### POST /v1/user.php?method=deleteUser
+### DELETE /v1/user.php?method=deleteUser
 - email: (string)
 - password: (string)
 
@@ -237,7 +237,7 @@ Returns an object that contains all the domains by a user id
 ```
 
 ### 3.2 Renew Domain:
-### POST /v1/domain.php?method=renewDomain
+### PUT /v1/domain.php?method=renewDomain
 - domain_id: (int)
 
 Returns an object that contains the domain info with newly updated expiry timestamp
@@ -275,7 +275,7 @@ Returns an object that contains the new domain info
 }
 ```
 ### 3.4 Delete Domain:
-### POST /v1/domain.php?method=deleteUser
+### DELETE /v1/domain.php?method=deleteUser
 - domain_id: (int)
 
 Returns an object that contains a message of successful delete
